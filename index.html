@@ -22,7 +22,6 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
-/* CENTER */
 .center {
   position: absolute;
   inset: 0;
@@ -32,7 +31,6 @@ body {
   align-items: center;
 }
 
-/* TEXT */
 #birthday-text {
   position: absolute;
   top: 4%;
@@ -49,7 +47,6 @@ body {
   transition: opacity 1.5s ease;
 }
 
-/* STEM */
 .stem {
   position: absolute;
   bottom: 0;
@@ -60,7 +57,6 @@ body {
   transition: height 3s ease;
 }
 
-/* LEAVES */
 .leaf {
   position: absolute;
   width: 0;
@@ -83,7 +79,6 @@ body {
   transform: rotate(30deg);
 }
 
-/* FLOWER */
 .flower {
   position: absolute;
   bottom: 260px;
@@ -136,7 +131,6 @@ body {
   transition: transform 2s ease;
 }
 
-/* BALLOONS */
 .balloon {
   position: absolute;
   bottom: -150px;
@@ -188,7 +182,7 @@ body {
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
-const TARGET_DATE = new Date(Date.now() + 30 * 1000);
+const TARGET_DATE = new Date(Date.now() + 30 * 1000); // TEST: 30 seconds from now
 const countdownEl = document.getElementById("countdown");
 const birthdayText = document.getElementById("birthday-text");
 
@@ -241,4 +235,37 @@ function reveal() {
     flower.style.opacity = 1;
 
     petals.forEach((p, i) => {
-      setTimeou
+      setTimeout(() => {
+        p.style.transform = p.style.transform.replace("scale(0)", "scale(1)");
+      }, i * 200);
+    });
+
+    centerDot.style.transform = "scale(1)";
+
+    confetti({
+      particleCount: 300,
+      spread: 160,
+      startVelocity: 45,
+      origin: { y: 0.6 }
+    });
+
+    spawnBalloons();
+  }, 1200);
+}
+
+function spawnBalloons() {
+  for (let i = 0; i < 12; i++) {
+    const balloon = document.createElement("div");
+    balloon.className = "balloon";
+    balloon.style.left = Math.random() * 100 + "vw";
+    balloon.style.background = colors[i % colors.length];
+    balloon.style.animationDuration = 8 + Math.random() * 6 + "s";
+    document.body.appendChild(balloon);
+  }
+}
+
+const timer = setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
+</body>
+</html>
